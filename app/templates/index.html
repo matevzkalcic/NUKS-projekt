@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      margin-bottom: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    input[type="text"] {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    .small-button {
+      font-size: 12px;
+      padding: 4px 8px;
+      margin-left: 10px;
+      background-color: #2ecc71;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 To-Do Tracker</h1>
+
+  <form method="post" action="/add">
+    <input type="text" name="title" placeholder="Vnesi novo nalogo" required>
+    <button type="submit">Dodaj</button>
+  </form>
+
+  <ul>
+    {% for id, title, completed in tasks %}
+      <li>
+        <span class="{{ 'completed' if completed else '' }}">{{ title }}</span>
+        <div>
+          {% if not completed %}
+            <form method="post" action="/complete/{{ id }}" style="display:inline;">
+              <button type="submit" class="small-button">✔ Končano</button>
+            </form>
+          {% else %}
+            <form method="post" action="/delete/{{ id }}" style="display:inline;">
+              <button type="submit" class="small-button" style="background-color:#e74c3c;">🗑 Izbriši</button>
+            </form>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
