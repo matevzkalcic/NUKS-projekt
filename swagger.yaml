@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: To-Do & Productivity Tracker API
+  version: 1.0.0
+  description: |
+    REST API za upravljanje todo nalog. Omogoča dodajanje, označevanje kot končano, brisanje in vpogled v statistiko.
+
+servers:
+  - url: http://localhost:8000
+    description: Lokalni razvojni strežnik
+
+paths:
+  /:
+    get:
+      summary: Pridobi HTML stran s seznamom opravil
+      responses:
+        '200':
+          description: HTML stran s seznamom nalog
+
+  /add:
+    post:
+      summary: Dodaj novo opravilo
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+              required:
+                - title
+      responses:
+        '303':
+          description: Preusmeritev na seznam nalog
+
+  /complete/{task_id}:
+    post:
+      summary: Označi nalogo kot zaključeno
+      parameters:
+        - in: path
+          name: task_id
+          schema:
+            type: integer
+          required: true
+          description: ID naloge za zaključek
+      responses:
+        '303':
+          description: Preusmeritev na seznam nalog
+
+  /delete/{task_id}:
+    post:
+      summary: Izbriši zaključeno nalogo
+      parameters:
+        - in: path
+          name: task_id
+          schema:
+            type: integer
+          required: true
+          description: ID naloge za izbris
+      responses:
+        '303':
+          description: Preusmeritev na seznam nalog
+
+  /stats:
+    get:
+      summary: Pridobi statistiko opravil
+      responses:
+        '200':
+          description: JSON statistika
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_tasks:
+                    type: integer
+                    example: 5
+                  completed:
+                    type: integer
+                    example: 3
+                  completion_rate:
+                    type: number
+                    format: float
+                    example: 60.0
