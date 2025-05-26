@@ -55,6 +55,7 @@ todo-tracker/
 
 ---
 
-## ✍️ Avtor
 
-Projekt ustvarjen za učenje, testiranje in predstavitev osnovnih principov spletne aplikacije s FastAPI + Docker.
+## Avtor
+
+Projekt je bil ustvarjen v sklopu predmeta Načrtovanje in upravljanje komunikacijskih sistemov
